@@ -1,0 +1,166 @@
+body{
+  margin:0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:#0f172a;
+}
+
+
+.Container{
+  width:1000px;
+  margin:40px auto;
+  padding:30px;
+  border-radius:16px;
+  background:#111827;
+  color:white;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+
+.Container h1{
+  text-align:center;
+  margin-bottom:5px;
+}
+
+.Container p{
+  text-align:center;
+  color:#9ca3af;
+}
+
+
+.Header{
+  padding:20px;
+  border-radius:12px;
+  background:#1f2937;
+  display:flex;
+  flex-direction:column;
+}
+.Header h2{
+  display: flex;
+  margin: auto;
+}
+
+.Total_balance{
+  font-size:25px;
+  display: flex;
+  align-items: anchor-center;
+  gap: 20px;
+}
+
+.Total_income{
+  color:#22c55e;
+   display: flex;
+  align-items: anchor-center;
+  gap: 20px;
+}
+
+.Total_expense{
+  color:#ef4444;
+   display: flex;
+  align-items: anchor-center;
+  gap: 20px;
+}
+
+.Header p{
+  color: white;
+}
+
+  
+
+.Transaction_box{
+  margin-top:30px;
+  display:flex;
+  gap:25px;
+}
+
+
+.Add_transaction{
+  flex:1;
+  background:#1f2937;
+  padding:20px;
+  border-radius:12px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.Add_transaction h1{
+  font-size:20px;
+}
+
+.Add_transaction input,
+.Add_transaction select{
+  padding:10px;
+  border-radius:6px;
+  border:none;
+  outline:none;
+  background:#111827;
+  color:white;
+}
+
+.Add_transaction input::placeholder{
+  color:#6b7280;
+}
+
+
+.AddExpense{
+  margin-top:10px;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#6366f1;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.AddExpense:hover{
+  background:#4f46e5;
+}
+
+
+.Transaction_history{
+  flex:1;
+  background:#1f2937;
+  padding:20px;
+  border-radius:12px;
+}
+
+.Transaction_history h1{
+  font-size:20px;
+}
+
+
+.Buttons{
+  margin:15px 0;
+  display:flex;
+  gap:10px;
+}
+
+.Buttons button{
+  padding:8px 14px;
+  border:none;
+  border-radius:8px;
+  background:#374151;
+  color:white;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.Buttons button:hover{
+  background:#6366f1;
+}
+
+
+.Transaction_history div{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#0f172a;
+  padding:12px;
+  border-radius:10px;
+  margin-top:10px;
+}
+
+.Transaction_history span{
+  font-size:15px;
+}
