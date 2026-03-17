@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdCurrencyRupee } from "react-icons/md";
 const Calculator = () => {
   const [incometype, setIncomeType] = useState("");
@@ -6,14 +6,29 @@ const Calculator = () => {
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [Transaction, setTransaction] = useState([]);
-
+  const [UsdRate, setUsdRate] = useState(0);
+  const [Filter, setFilter] = useState("All");
+  useEffect(() => {
+    CurrConversion();
+  }, []);
+  async function CurrConversion() {
+    const response = await fetch("https://open.er-api.com/v6/latest/USD");
+    const result = await response.json();
+    console.log(result);
+    setUsdRate(result.rates.INR);
+  }
   function AddIncome() {
+    let ConvertedAmout = Number(amount);
+    if (currency === "USD") {
+      ConvertedAmout = Number(amount) * UsdRate;
+    }
+
     const obj = {
       id: Date.now(),
       Title: description,
       currencyType: currency,
       type: incometype,
-      TransactionAmount: Number(amount),
+      TransactionAmount: ConvertedAmout,
     };
     console.log(obj);
 
@@ -38,19 +53,23 @@ const Calculator = () => {
   }, 0);
 
   const totalBalance = totalIncome - totalExpense;
+  const filterTransaction =
+    Filter === "All"
+      ? Transaction
+      : Transaction.filter((obj) => obj.currencyType === Filter);
   return (
     <div className="Container">
       <h1>Budget Tracker</h1>
       <p>Track your income and expenses in multiple currencies</p>
       <div className="Header">
         <h2>Balance overview (ALL amounts in INR)</h2>
-        <p>1 USD = 92.70 INR</p>
+        <p>1 USD = {UsdRate}</p>
         <h3 className="Total_balance">
           Total Balance:{" "}
           <p>
             {" "}
             <MdCurrencyRupee />
-            {totalBalance}
+            {totalBalance.toFixed(2)}
           </p>
         </h3>
         <h3 className="Total_income">
@@ -58,7 +77,7 @@ const Calculator = () => {
           <p>
             {" "}
             <MdCurrencyRupee />
-            {totalIncome}
+            {totalIncome.toFixed(2)}
           </p>
         </h3>
         <h3 className="Total_expense">
@@ -66,7 +85,7 @@ const Calculator = () => {
           <p>
             {" "}
             <MdCurrencyRupee />
-            {totalExpense}
+            {totalExpense.toFixed(2)}
           </p>
         </h3>
       </div>
@@ -126,18 +145,19 @@ const Calculator = () => {
         <div className="Transaction_history">
           <h1>Transaction History</h1>
           <div className="Buttons">
-            <button>All</button>
-            <button>$USD</button>
-            <button>
+            <button onClick={() => setFilter("All")}>All</button>
+            <button onClick={() => setFilter("USD")}>$USD</button>
+            <button onClick={() => setFilter("INR")}>
               <MdCurrencyRupee />
               INR
             </button>
           </div>
-          {Transaction.map((obj) => {
+          {filterTransaction.map((obj) => {
             return (
-              <div>
+              <div key={obj.id}>
                 <span>{obj.Title}</span>
                 <span>{obj.currencyType}</span>
+
                 <span
                   style={{
                     color: obj.type === "income" ? "green" : "red",
@@ -146,7 +166,7 @@ const Calculator = () => {
                 >
                   {obj.type === "income" ? "+" : "-"}
                   <MdCurrencyRupee />
-                  {obj.TransactionAmount}
+                  {obj.TransactionAmount.toFixed(2)}
                 </span>
               </div>
             );

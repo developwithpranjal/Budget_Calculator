@@ -1,166 +1,224 @@
-body{
-  margin:0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background:#0f172a;
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #0f172a;
 }
 
+.Container {
+  max-width: 1000px;
+  width: 90%;
+  margin: 40px auto;
 
-.Container{
-  width:1000px;
-  margin:40px auto;
-  padding:30px;
-  border-radius:16px;
-  background:#111827;
-  color:white;
-  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  padding: 30px;
+  border-radius: 16px;
+  background: #111827;
+  color: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-.Container h1{
-  text-align:center;
-  margin-bottom:5px;
+.Container h1 {
+  text-align: center;
+  margin-bottom: 5px;
+  background: linear-gradient(90deg, rgb(217, 241, 1), rgb(234, 3, 234));
+  -webkit-background-clip: text;
+  background-clip: none;
+  -webkit-text-fill-color: transparent;
 }
 
-.Container p{
-  text-align:center;
-  color:#9ca3af;
+.Container p {
+  text-align: center;
+  color: #9ca3af;
 }
 
-
-.Header{
-  padding:20px;
-  border-radius:12px;
-  background:#1f2937;
-  display:flex;
-  flex-direction:column;
+.Header {
+  padding: 20px;
+  border-radius: 12px;
+  background: #1f2937;
+  display: flex;
+  flex-direction: column;
 }
-.Header h2{
+.Header h2 {
   display: flex;
   margin: auto;
 }
 
-.Total_balance{
-  font-size:25px;
+.Total_balance {
+  font-size: 20px;
   display: flex;
   align-items: anchor-center;
   gap: 20px;
+  border-left: 5px solid rgb(1, 195, 209);
+  color: rgb(3, 167, 237);
 }
 
-.Total_income{
-  color:#22c55e;
-   display: flex;
+.Total_income {
+  color: #03f62f;
+  display: flex;
   align-items: anchor-center;
   gap: 20px;
+   border-left: 5px solid rgb(5, 214, 5);
 }
 
-.Total_expense{
-  color:#ef4444;
-   display: flex;
+.Total_expense {
+  color: #f60202;
+  display: flex;
   align-items: anchor-center;
   gap: 20px;
+   border-left: 5px solid red;
 }
-
-.Header p{
+.Total_balance,
+.Total_expense,
+.Total_income {
+  margin: 12px auto;
+  padding: 12px 18px;
+  border-radius: 10px;
+  background: #020617;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 17px;
+  width: 60%;
+  min-width: 280px;
+}
+.Header p {
   color: white;
 }
 
-  
-
-.Transaction_box{
-  margin-top:30px;
-  display:flex;
-  gap:25px;
+.Transaction_box {
+  margin-top: 30px;
+  display: flex;
+  gap: 25px;
 }
 
-
-.Add_transaction{
-  flex:1;
-  background:#1f2937;
-  padding:20px;
-  border-radius:12px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+.Add_transaction {
+  flex: 1;
+  background: #1f2937;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.Add_transaction h1{
-  font-size:20px;
+.Add_transaction h1 {
+  font-size: 20px;
 }
 
 .Add_transaction input,
-.Add_transaction select{
-  padding:10px;
-  border-radius:6px;
-  border:none;
-  outline:none;
-  background:#111827;
-  color:white;
+.Add_transaction select {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  background: #111827;
+  color: white;
 }
 
-.Add_transaction input::placeholder{
-  color:#6b7280;
+.Add_transaction input::placeholder {
+  color: #6b7280;
 }
 
-
-.AddExpense{
-  margin-top:10px;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  background:#6366f1;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
+.AddExpense {
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #6366f1;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.AddExpense:hover{
-  background:#4f46e5;
+.AddExpense:hover {
+  background: #4f46e5;
 }
 
-
-.Transaction_history{
-  flex:1;
-  background:#1f2937;
-  padding:20px;
-  border-radius:12px;
+.Transaction_history {
+  flex: 1;
+  background: #1f2937;
+  padding: 20px;
+  border-radius: 12px;
 }
 
-.Transaction_history h1{
-  font-size:20px;
+.Transaction_history h1 {
+  font-size: 20px;
 }
 
-
-.Buttons{
-  margin:15px 0;
-  display:flex;
-  gap:10px;
+.Buttons {
+  margin: 15px 0;
+  display: flex;
+  gap: 10px;
 }
 
-.Buttons button{
-  padding:8px 14px;
-  border:none;
-  border-radius:8px;
-  background:#374151;
-  color:white;
-  cursor:pointer;
-  transition:0.3s;
+.Buttons button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #374151;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.Buttons button:hover{
-  background:#6366f1;
+.Buttons button:hover {
+  background: #6366f1;
 }
 
-
-.Transaction_history div{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:#0f172a;
-  padding:12px;
-  border-radius:10px;
-  margin-top:10px;
+.Transaction_history div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0f172a;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 
-.Transaction_history span{
-  font-size:15px;
+.Transaction_history span {
+  font-size: 15px;
+}
+.Transaction_history div:hover {
+  border: solid violet;
+}
+@media (max-width: 480px) {
+  .Container {
+    padding: 15px;
+  }
+
+  .Container h1 {
+    font-size: 24px;
+  }
+
+  .Header h2 {
+    font-size: 18px;
+  }
+
+  .Total_balance,
+  .Total_income,
+  .Total_expense {
+    font-size: 16px;
+    gap: 10px;
+  }
+
+  .Add_transaction input,
+  .Add_transaction select {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .AddExpense {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .Transaction_history div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .Buttons {
+    flex-wrap: wrap;
+  }
 }
