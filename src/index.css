@@ -181,6 +181,11 @@ body {
 .Transaction_history div:hover {
   border: solid violet;
 }
+.Deletebtn{
+  color: rgb(249, 37, 37);
+  cursor: pointer;
+}
+
 @media (max-width: 480px) {
   .Container {
     padding: 15px;

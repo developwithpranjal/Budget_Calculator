@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MdCurrencyRupee } from "react-icons/md";
+import { ImCancelCircle } from "react-icons/im";
 const Calculator = () => {
   const [incometype, setIncomeType] = useState("");
   const [currency, setCurrency] = useState("");
@@ -57,6 +58,14 @@ const Calculator = () => {
     Filter === "All"
       ? Transaction
       : Transaction.filter((obj) => obj.currencyType === Filter);
+
+  function DeleteTrans(TransToDelete) {
+    setTransaction(
+      Transaction.filter((obj) => {
+        return obj.id !== TransToDelete;
+      }),
+    );
+  }
   return (
     <div className="Container">
       <h1>Budget Tracker</h1>
@@ -168,6 +177,7 @@ const Calculator = () => {
                   <MdCurrencyRupee />
                   {obj.TransactionAmount.toFixed(2)}
                 </span>
+                <ImCancelCircle onClick={() => DeleteTrans(obj.id)} className="Deletebtn"/>
               </div>
             );
           })}
