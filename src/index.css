@@ -48,7 +48,7 @@ body {
   align-items: anchor-center;
   gap: 20px;
   border-left: 5px solid rgb(1, 195, 209);
-  color: rgb(3, 167, 237);
+  color: rgb(1, 195, 209);
 }
 
 .Total_income {
@@ -98,6 +98,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-top: 50px;
 }
 
 .Add_transaction h1 {
@@ -139,6 +140,7 @@ body {
   background: #1f2937;
   padding: 20px;
   border-radius: 12px;
+  margin-top: 50px;
 }
 
 .Transaction_history h1 {
@@ -226,4 +228,17 @@ body {
   .Buttons {
     flex-wrap: wrap;
   }
+}
+.chart-card {
+  background: #0f172a;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  /* height: 400px; */
+}
+.charts-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 }

@@ -1,6 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { MdCurrencyRupee } from "react-icons/md";
 import { ImCancelCircle } from "react-icons/im";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  ResponsiveContainer,
+} from "recharts";
 const Calculator = () => {
   const [incometype, setIncomeType] = useState("");
   const [currency, setCurrency] = useState("");
@@ -9,6 +22,7 @@ const Calculator = () => {
   const [Transaction, setTransaction] = useState([]);
   const [UsdRate, setUsdRate] = useState(0);
   const [Filter, setFilter] = useState("All");
+  
   useEffect(() => {
     CurrConversion();
   }, []);
@@ -20,9 +34,12 @@ const Calculator = () => {
   }
   function AddIncome() {
     let ConvertedAmout = Number(amount);
+
     if (currency === "USD") {
       ConvertedAmout = Number(amount) * UsdRate;
     }
+
+    ConvertedAmout = Math.round(ConvertedAmout * 100) / 100;
 
     const obj = {
       id: Date.now(),
@@ -54,6 +71,12 @@ const Calculator = () => {
   }, 0);
 
   const totalBalance = totalIncome - totalExpense;
+  const data = [
+    { name: "Income", value: totalIncome },
+    { name: "Expense", value: totalExpense },
+  ];
+
+  const COLORS = ["#029f17", "#b70303"];
   const filterTransaction =
     Filter === "All"
       ? Transaction
@@ -98,6 +121,51 @@ const Calculator = () => {
           </p>
         </h3>
       </div>
+      <div style={{ width: "100%", height: 300 }} className="chart-card">
+        <h2>Income vs Expense</h2>
+        <ResponsiveContainer>
+          <PieChart>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              outerRadius={100}
+              fill="#8884d8"
+              dataKey="value"
+              label={({ name, percent }) =>
+                `${name} ${(percent * 100).toFixed(0)}%`
+              }
+            >
+              {data.map((entry, index) => (
+                <Cell key={index} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+      <div style={{ width: "100%", height: 300 }} className="chart-card">
+        <h2>Income vs Expense (Bar)</h2>
+        <ResponsiveContainer>
+          <BarChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="value">
+              {data.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={entry.name === "Income" ? "#029f17" : "#b70303"}
+                />
+              ))}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
       <div className="Transaction_box">
         <div className="Add_transaction">
           <h1>Add Transaction</h1>
@@ -109,7 +177,7 @@ const Calculator = () => {
             onChange={(e) => setIncomeType(e.target.value)}
             value={incometype}
           >
-            <option value="">Select income type</option>
+            <option value="">Select Transaction type</option>
             <option value="income">Income</option>
             <option value="expense">Expense</option>
           </select>
@@ -177,7 +245,10 @@ const Calculator = () => {
                   <MdCurrencyRupee />
                   {obj.TransactionAmount.toFixed(2)}
                 </span>
-                <ImCancelCircle onClick={() => DeleteTrans(obj.id)} className="Deletebtn"/>
+                <ImCancelCircle
+                  onClick={() => DeleteTrans(obj.id)}
+                  className="Deletebtn"
+                />
               </div>
             );
           })}
