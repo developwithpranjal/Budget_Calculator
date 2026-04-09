@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { MdCurrencyRupee } from "react-icons/md";
 import { ImCancelCircle } from "react-icons/im";
+import { onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
+// import Router from "../Components/Router";
+
 import {
   PieChart,
   Pie,
@@ -14,6 +19,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
+import "./index.css";
 const Calculator = () => {
   const [incometype, setIncomeType] = useState("");
   const [currency, setCurrency] = useState("");
@@ -22,9 +28,22 @@ const Calculator = () => {
   const [Transaction, setTransaction] = useState([]);
   const [UsdRate, setUsdRate] = useState(0);
   const [Filter, setFilter] = useState("All");
-  
+  const navigate = useNavigate();
+const [user, setUser] = useState(null);
+
   useEffect(() => {
     CurrConversion();
+  }, []);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (u) => {
+      if (!u) {
+        navigate("/");
+      } else {
+        setUser(u);
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
   async function CurrConversion() {
     const response = await fetch("https://open.er-api.com/v6/latest/USD");
@@ -33,6 +52,10 @@ const Calculator = () => {
     setUsdRate(result.rates.INR);
   }
   function AddIncome() {
+    if (!user) {
+      alert("Please login first 🔐");
+      return;
+    }
     let ConvertedAmout = Number(amount);
 
     if (currency === "USD") {
@@ -215,7 +238,11 @@ const Calculator = () => {
             onChange={(e) => setDescription(e.target.value)}
             value={description}
           />
-          <button className="AddExpense" onClick={() => AddIncome()}>
+          <button
+            className="AddExpense"
+            onClick={() => AddIncome()}
+            disabled={!user}
+          >
             Add Expense(INR)
           </button>
         </div>
