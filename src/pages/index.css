@@ -242,3 +242,38 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
+.category-container {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.category-item {
+  background: #020617;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #e2e8f0;
+  transition: 0.2s;
+  border: 1px solid transparent;
+}
+
+.category-item:hover {
+  border: 1px solid #22c55e;
+  transform: scale(1.05);
+}
+
+.category-item.active {
+  border: 1px solid #22c55e;
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.category-item .icon {
+  font-size: 18px;
+}
