@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { auth } from "../firebase";
-import "./Login.css"
+import "./Login.css";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -15,7 +15,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+const [loading,setLoading] = useState(false)
   const navigate = useNavigate();
 
   const handleAuth = async () => {
@@ -28,7 +28,7 @@ const Login = () => {
       alert("Passwords do not match ❌");
       return;
     }
-
+setLoading(true);
     try {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password);
@@ -37,7 +37,7 @@ const Login = () => {
         const userCred = await createUserWithEmailAndPassword(
           auth,
           email,
-          password
+          password,
         );
 
         await updateProfile(userCred.user, {
@@ -51,7 +51,12 @@ const Login = () => {
     } catch (error) {
       alert(error.message);
     }
+    finally{
+      setLoading(false)
+    }
   };
+  const canSubmit = email && password &&
+   (isLogin || (name && confirmPassword && password === confirmPassword));
 
   return (
     <div className="auth-container">
@@ -94,15 +99,8 @@ const Login = () => {
           />
         )}
 
-        <button
-          onClick={handleAuth}
-          disabled={
-            !email ||
-            !password ||
-            (!isLogin && (!name || !confirmPassword || password !== confirmPassword))
-          }
-        >
-          {isLogin ? "Login" : "Signup"}
+        <button onClick={handleAuth} disabled={!canSubmit || loading}>
+          {loading ? "Please wait..." : isLogin ? "Sign in" : "Create account"}
         </button>
 
         <p onClick={() => setIsLogin(!isLogin)} className="toggle-text">

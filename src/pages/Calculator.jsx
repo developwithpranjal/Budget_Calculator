@@ -8,6 +8,7 @@ import Header from "../Components/Header";
 import AddTransaction from "../Components/AddTransaction";
 import TransactionList from "../Components/TransactionList";
 import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 import "./index.css";
 
@@ -57,7 +58,7 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
 
     fetchData();
   }, [user]);
-   
+
   if (loading) return <h2>Loading...</h2>;
 
   async function CurrConversion() {
@@ -67,43 +68,43 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
   }
 
   async function AddIncome() {
-    
-    if (!user) {
-      alert("Please login first 🔐");
-      return;
-    }
-    
-    let ConvertedAmout = Number(amount);
-    
-    if (currency === "USD") {
-      ConvertedAmout = Number(amount) * UsdRate;
-    }
-    
-    ConvertedAmout = Math.round(ConvertedAmout * 100) / 100;
-    
-    
-    // const selectedCategory = categories.find((cat) => cat.name === category);
-const obj = {
-  id: Date.now(),
-  Title: description,
-  currencyType: currency,
-  type: incometype,
-  TransactionAmount: ConvertedAmout,
-  category: category,
-  // catIcon: selectedCategory?.icon || "",
-  userId: user.uid,
-};
-
-    await addDoc(collection(db, "transactions"), obj);
-
-    setTransactions([...transactions, obj]);
-
-    setIncomeType("");
-    setCurrency("");
-    setAmount("");
-    setDescription("");
-    setCategory("");
+  if (!user) {
+    alert("Please login first 🔐");
+    return;
   }
+
+  let ConvertedAmout = Number(amount);
+
+  if (currency === "USD") {
+    ConvertedAmout = Number(amount) * UsdRate;
+  }
+
+  ConvertedAmout = Math.round(ConvertedAmout * 100) / 100;
+
+  const obj = {
+    Title: description,
+    currencyType: currency,
+    type: incometype,
+    TransactionAmount: ConvertedAmout,
+    category: category,
+    userId: user.uid,
+  };
+
+  const docRef = await addDoc(collection(db, "transactions"), obj);
+
+  const newObj = {
+    ...obj,
+    id: docRef.id, 
+  };
+
+  setTransactions((prev) => [...prev, newObj]); 
+
+  setIncomeType("");
+  setCurrency("");
+  setAmount("");
+  setDescription("");
+  setCategory("");
+}
 
   const totalIncome = transactions.reduce(
     (acc, obj) => (obj.type === "income" ? acc + obj.TransactionAmount : acc),
@@ -120,11 +121,23 @@ const obj = {
       ? transactions
       : transactions.filter((obj) => obj.currencyType === Filter);
 
-  function DeleteTrans(TransToDelete) {
-    setTransactions(transactions.filter((obj) => obj.id !== TransToDelete)); // ✅
+  async function DeleteTrans(id) {
+  try {
+    // if (typeof id !== "string") {
+    //   alert("Old invalid transaction ❌ delete from Firebase manually");
+    //   return;
+    // }
+
+    await deleteDoc(doc(db, "transactions", id));
+
+    setTransactions((prev) =>
+      prev.filter((item) => item.id !== id)
+    );
+  } catch (error) {
+    console.error("Delete error:", error);
   }
-  
- 
+}
+
   return (
     <div className="Container">
       <h1>Budget Tracker</h1>
@@ -136,7 +149,6 @@ const obj = {
         totalExpense={totalExpense}
         UsdRate={UsdRate}
       />
-
 
       <div className="Transaction_box">
         <AddTransaction

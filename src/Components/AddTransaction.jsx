@@ -1,7 +1,6 @@
 import React from "react";
 import { MdCurrencyRupee } from "react-icons/md";
 import CategorySelector from "./CategorySelector";
-
 const AddTransaction = ({
   incometype, setIncomeType,
   currency, setCurrency,
@@ -26,7 +25,7 @@ const AddTransaction = ({
 
       <label>Currency:</label>
       <select value={currency} onChange={(e) => setCurrency(e.target.value)}>
-        <option value="">Select Currency</option>
+        {/* <option value="">Select Currency</option> */}
         <option value="INR">INR- Indian Rupee</option>
         <option value="USD">$USD- US Dollar</option>
       </select>
@@ -42,7 +41,7 @@ const AddTransaction = ({
       <label>Description</label>
       <input
         type="text"
-        placeholder="Enter Description"
+        placeholder="e.g. Groceries,food"
         onChange={(e) => setDescription(e.target.value)}
         value={description}
       />
