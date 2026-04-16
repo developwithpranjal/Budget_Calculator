@@ -32,7 +32,6 @@ const CategorySelector = ({ category, setCategory }) => {
             className={`category-item ${category === cat.name ? "active" : ""}`}
             onClick={() => setCategory(cat.name)}
           >
-            <span className="icon">{cat.name}</span>
             <p>{cat.icon} {cat.name}</p>
           </div>
         ))}

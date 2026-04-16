@@ -18,7 +18,7 @@ body {
 .Container h1 {
   text-align: center;
   margin-bottom: 5px;
-  background: linear-gradient(90deg, rgb(217, 241, 1), rgb(234, 3, 234));
+  background: white;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;

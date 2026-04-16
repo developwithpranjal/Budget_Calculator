@@ -5,6 +5,7 @@ import { auth } from "../firebase";
 import { MdPerson, MdLogin, MdLogout } from "react-icons/md";
 import { SiSimpleanalytics } from "react-icons/si";
 import { GiWallet } from "react-icons/gi";
+
 import "./Navbar.css";
 
 const Navbar = ({ user, setUser, setTransactions }) => {
@@ -20,11 +21,11 @@ const Navbar = ({ user, setUser, setTransactions }) => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-brand"><Link to="/dashboard"><GiWallet size={20} color="white"/> Budget Tracker</Link></div>
+      <div className="navbar-brand"><Link to="/dashboard"><GiWallet size={20} color="white"/> Expenso</Link></div>
       <div className="navbar-links">
         
         <Link to="/analytics" className={`nav-link ${location.pathname === "/analytics" ? "active" : ""}`}>
-          <SiSimpleanalytics color="green" /> Analytics
+          <SiSimpleanalytics color="red" /> Analytics
         </Link>
         <Link to="/profile" className={`nav-link ${location.pathname === "/profile" ? "active" : ""}`}>
           <MdPerson size={20} /> Profile

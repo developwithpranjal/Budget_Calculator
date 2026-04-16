@@ -11,9 +11,9 @@
 }
 
 .navbar-brand {
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bold;
-  background: linear-gradient(90deg, rgb(217, 241, 1), rgb(234, 3, 234));
+  background-color: #4f46e5;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -42,7 +42,8 @@
 
 .nav-link:hover,
 .nav-link.active {
-  background: #374151;
+  background: #3a78bf9e;
+  border: 1px solid rgb(7, 7, 236);
   color: white;
 }
 
