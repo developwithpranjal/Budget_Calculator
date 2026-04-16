@@ -8,7 +8,6 @@ body {
   max-width: 1000px;
   width: 90%;
   margin: 40px auto;
-
   padding: 30px;
   border-radius: 16px;
   background: #111827;
@@ -21,55 +20,98 @@ body {
   margin-bottom: 5px;
   background: linear-gradient(90deg, rgb(217, 241, 1), rgb(234, 3, 234));
   -webkit-background-clip: text;
-  background-clip: none;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.Container p {
+.Container > p {
   text-align: center;
   color: #9ca3af;
+  margin-top: 0;
 }
 
+/* ── Header ── */
 .Header {
-  padding: 20px;
-  border-radius: 12px;
+  padding: 20px 24px;
+  border-radius: 14px;
   background: #1f2937;
   display: flex;
   flex-direction: column;
+  gap: 4px;
 }
+
 .Header h2 {
   display: flex;
-  margin: auto;
+  margin: 0 auto 4px;
+  font-size: 16px;
+  color: #9ca3af;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.Total_balance {
-  font-size: 20px;
+/* USD rate row with refresh */
+.usd-rate-row {
   display: flex;
-  align-items: anchor-center;
-  gap: 20px;
-  border-left: 5px solid rgb(1, 195, 209);
-  color: rgb(1, 195, 209);
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
 }
 
-.Total_income {
-  color: #03f62f;
-  display: flex;
-  align-items: anchor-center;
-  gap: 20px;
-   border-left: 5px solid rgb(5, 214, 5);
+.usd-rate-text {
+  color: #e2e8f0;
+  font-size: 15px;
+  font-weight: 600;
 }
 
-.Total_expense {
-  color: #f60202;
+.refresh-btn {
+  background: #374151;
+  border: none;
+  border-radius: 8px;
+  color: #a5b4fc;
+  padding: 5px 8px;
+  cursor: pointer;
   display: flex;
-  align-items: anchor-center;
-  gap: 20px;
-   border-left: 5px solid red;
+  align-items: center;
+  transition: background 0.2s;
 }
+
+.refresh-btn:hover:not(.refresh-disabled) {
+  background: #6366f1;
+  color: white;
+}
+
+.refresh-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.last-updated {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.cooldown-hint {
+  font-size: 12px;
+  color: #4b5563;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+/* Balance Cards */
 .Total_balance,
 .Total_expense,
 .Total_income {
-  margin: 12px auto;
+  margin: 8px auto;
   padding: 12px 18px;
   border-radius: 10px;
   background: #020617;
@@ -80,16 +122,30 @@ body {
   width: 60%;
   min-width: 280px;
 }
-.Header p {
-  color: white;
+
+.Total_balance {
+  border-left: 5px solid rgb(1, 195, 209);
+  color: rgb(1, 195, 209);
 }
 
+.Total_income {
+  color: #03f62f;
+  border-left: 5px solid rgb(5, 214, 5);
+}
+
+.Total_expense {
+  color: #f60202;
+  border-left: 5px solid red;
+}
+
+/* ── Transaction Box ── */
 .Transaction_box {
   margin-top: 30px;
   display: flex;
   gap: 25px;
 }
 
+/* ── Add Transaction ── */
 .Add_transaction {
   flex: 1;
   background: #1f2937;
@@ -103,16 +159,29 @@ body {
 
 .Add_transaction h1 {
   font-size: 20px;
+  margin: 0 0 4px;
+}
+
+.Add_transaction label {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-bottom: -4px;
 }
 
 .Add_transaction input,
 .Add_transaction select {
   padding: 10px;
-  border-radius: 6px;
-  border: none;
+  border-radius: 8px;
+  border: 1px solid #374151;
   outline: none;
   background: #111827;
   color: white;
+  transition: border-color 0.2s;
+}
+
+.Add_transaction input:focus,
+.Add_transaction select:focus {
+  border-color: #6366f1;
 }
 
 .Add_transaction input::placeholder {
@@ -129,10 +198,17 @@ body {
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
+  font-size: 15px;
 }
 
-.AddExpense:hover {
+.AddExpense:hover:not(:disabled) {
   background: #4f46e5;
+  transform: translateY(-1px);
+}
+
+.AddExpense:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .Transaction_history {
@@ -145,29 +221,57 @@ body {
 
 .Transaction_history h1 {
   font-size: 20px;
+  margin: 0 0 4px;
 }
 
 .Buttons {
-  margin: 15px 0;
+  margin: 14px 0;
   display: flex;
   gap: 10px;
 }
+/* .category-item {
+  padding: 10px;
+  border-radius: 8px;
+  background: #1e293b;
+  color: #e2e8f0;
+  cursor: pointer;
+  text-align: center;
+}
+
+.category-item.active {
+  background: #22c55e;
+  color: black;
+  font-weight: bold;
+} */
 
 .Buttons button {
-  padding: 8px 14px;
-  border: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  border: 2px solid transparent;
   border-radius: 8px;
   background: #374151;
-  color: white;
+  color: #9ca3af;
   cursor: pointer;
-  transition: 0.3s;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
 }
 
 .Buttons button:hover {
-  background: #6366f1;
+  background: #4b5563;
+  color: white;
 }
 
-.Transaction_history div {
+.Buttons button.filter-active {
+  background: #6366f1;
+  color: white;
+  border-color: #818cf8;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+}
+
+.Transaction_history > div {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -175,73 +279,45 @@ body {
   padding: 12px;
   border-radius: 10px;
   margin-top: 10px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.Transaction_history > div:hover {
+  border-color: #6366f1;
 }
 
 .Transaction_history span {
-  font-size: 15px;
+  font-size: 14px;
 }
-.Transaction_history div:hover {
-  border: solid violet;
-}
-.Deletebtn{
+
+.Deletebtn {
   color: rgb(249, 37, 37);
   cursor: pointer;
+  transition: transform 0.2s;
+  flex-shrink: 0;
 }
 
-@media (max-width: 480px) {
-  .Container {
-    padding: 15px;
-  }
-
-  .Container h1 {
-    font-size: 24px;
-  }
-
-  .Header h2 {
-    font-size: 18px;
-  }
-
-  .Total_balance,
-  .Total_income,
-  .Total_expense {
-    font-size: 16px;
-    gap: 10px;
-  }
-
-  .Add_transaction input,
-  .Add_transaction select {
-    font-size: 14px;
-    padding: 8px;
-  }
-
-  .AddExpense {
-    padding: 10px;
-    font-size: 14px;
-  }
-
-  .Transaction_history div {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-
-  .Buttons {
-    flex-wrap: wrap;
-  }
+.Deletebtn:hover {
+  transform: scale(1.2);
 }
+
+/* ── Charts ── */
 .chart-card {
   background: #0f172a;
   padding: 20px;
   border-radius: 12px;
   margin: 20px 0;
   box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  /* height: 400px; */
 }
+
 .charts-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
+
+/* ── Category ── */
 .category-container {
   margin-top: 15px;
   text-align: center;
@@ -256,12 +332,13 @@ body {
 
 .category-item {
   background: #020617;
-  padding: 10px;
+  /* padding: 10px; */
   border-radius: 10px;
   cursor: pointer;
   color: #e2e8f0;
   transition: 0.2s;
   border: 1px solid transparent;
+  font-size: 13px;
 }
 
 .category-item:hover {
@@ -277,3 +354,61 @@ body {
 .category-item .icon {
   font-size: 18px;
 }
+
+/* ── Responsive ── */
+/* @media (max-width: 700px) {
+  .Transaction_box {
+    flex-direction: column;
+  }
+  .charts-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .Container {
+    padding: 15px;
+    margin: 16px auto;
+  }
+
+  .Container h1 {
+    font-size: 24px;
+  }
+
+  .Header h2 {
+    font-size: 14px;
+  }
+
+  .Total_balance,
+  .Total_income,
+  .Total_expense {
+    font-size: 15px;
+    gap: 10px;
+    width: 90%;
+  }
+
+  .Add_transaction input,
+  .Add_transaction select {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .AddExpense {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .Transaction_history > div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .Buttons {
+    flex-wrap: wrap;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+} */

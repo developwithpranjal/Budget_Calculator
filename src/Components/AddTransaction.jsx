@@ -46,12 +46,12 @@ const AddTransaction = ({
         value={description}
       />
 
-      {incometype && currency && amount && (
+      {incometype && amount && (
         <CategorySelector category={category} setCategory={setCategory} />
       )}
 
       <button className="AddExpense" onClick={AddIncome} disabled={!user}>
-        Add Expense(INR)
+        {incometype === "income" ? "Add Income (INR)" : incometype === "expense" ? "Add Expense (INR)" : "Add Transaction (INR)"}
       </button>
     </div>
   );

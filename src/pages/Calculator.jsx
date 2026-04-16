@@ -80,13 +80,13 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
   }
 
   ConvertedAmout = Math.round(ConvertedAmout * 100) / 100;
-
   const obj = {
     Title: description,
     currencyType: currency,
     type: incometype,
     TransactionAmount: ConvertedAmout,
     category: category,
+    
     userId: user.uid,
   };
 
@@ -148,6 +148,7 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
         totalIncome={totalIncome}
         totalExpense={totalExpense}
         UsdRate={UsdRate}
+        onRefreshRate={CurrConversion}
       />
 
       <div className="Transaction_box">
@@ -169,6 +170,7 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
           filterTransaction={filterTransaction}
           setFilter={setFilter}
           DeleteTrans={DeleteTrans}
+          activeFilter={Filter}
         />
       </div>
     </div>
