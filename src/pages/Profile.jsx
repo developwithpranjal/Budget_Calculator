@@ -124,6 +124,7 @@ const Profile = ({ user }) => {
               {editing ? (
                 <input
                   className="profile-input"
+                  type="number"
                   value={draft.phone}
                   onChange={(e) => setDraft({ ...draft, phone: e.target.value })}
                   placeholder="+91 XXXXX XXXXX"

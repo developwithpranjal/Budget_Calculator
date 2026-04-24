@@ -14,7 +14,7 @@ import "./index.css";
 
 const Calculator = ({ transactions, setTransactions, user, setUser }) => {
   const [incometype, setIncomeType] = useState("");
-  const [currency, setCurrency] = useState("");
+  const [currency, setCurrency] = useState("INR");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [UsdRate, setUsdRate] = useState(0);
@@ -116,10 +116,15 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
   );
   const totalBalance = totalIncome - totalExpense;
 
-  const filterTransaction =
-    Filter === "All"
-      ? transactions
-      : transactions.filter((obj) => obj.currencyType === Filter);
+ const filterTransaction =
+  Filter === "All"
+    ? transactions
+    : transactions.filter(
+        (obj) => obj.currencyType && obj.currencyType === Filter
+      );
+      console.log(transactions);
+      
+      
 
   async function DeleteTrans(id) {
   try {
