@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
-import { categories } from "../Components/CategorySelector";
 
 import Header from "../Components/Header";
 import AddTransaction from "../Components/AddTransaction";
 import TransactionList from "../Components/TransactionList";
-import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
-import { deleteDoc, doc } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 import "./index.css";
 
@@ -22,8 +19,6 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // const navigate = useNavigate();
-
   useEffect(() => {
     CurrConversion();
   }, []);
@@ -33,7 +28,6 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
       setUser(u);
       setLoading(false);
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -41,112 +35,116 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
     if (!user) return;
 
     const fetchData = async () => {
-      const q = query(
-        collection(db, "transactions"),
-        where("userId", "==", user.uid),
-      );
-
-      const snapshot = await getDocs(q);
-
-      const data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-      setTransactions(data);
+      try {
+        const q = query(
+          collection(db, "transactions"),
+          where("userId", "==", user.uid)
+        );
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setTransactions(data);
+      } catch (err) {
+        console.error("Failed to fetch transactions:", err);
+      }
     };
 
     fetchData();
   }, [user]);
 
-  if (loading) return <h2>Loading...</h2>;
+  if (loading) {
+    return (
+      <div className="loading-screen">
+        <div className="loading-spinner"></div>
+        <p>Loading your dashboard...</p>
+      </div>
+    );
+  }
 
   async function CurrConversion() {
-    const response = await fetch("https://open.er-api.com/v6/latest/USD");
-    const result = await response.json();
-    setUsdRate(result.rates.INR);
+    try {
+      const response = await fetch("https://open.er-api.com/v6/latest/USD");
+      const result = await response.json();
+      setUsdRate(result.rates.INR);
+    } catch (err) {
+      console.error("Currency fetch failed:", err);
+    }
   }
 
   async function AddIncome() {
-  if (!user) {
-    alert("Please login first 🔐");
-    return;
+    if (!user) {
+      alert("Please login first 🔐");
+      return;
+    }
+
+    let convertedAmount = Number(amount);
+
+    if (currency === "USD") {
+      convertedAmount = Number(amount) * UsdRate;
+    }
+
+    convertedAmount = Math.round(convertedAmount * 100) / 100;
+
+    const obj = {
+      Title: description,
+      currencyType: currency,
+      type: incometype,
+      TransactionAmount: convertedAmount,
+      category: category,
+      userId: user.uid,
+      createdAt: Date.now(),
+    };
+
+    try {
+      const docRef = await addDoc(collection(db, "transactions"), obj);
+      const newObj = { ...obj, id: docRef.id };
+      setTransactions((prev) => [...prev, newObj]);
+
+      // Reset form — currency resets to INR (not empty string)
+      setIncomeType("");
+      setCurrency("INR");
+      setAmount("");
+      setDescription("");
+      setCategory("");
+    } catch (err) {
+      console.error("Failed to add transaction:", err);
+      alert("Failed to add transaction. Please try again.");
+    }
   }
-
-  let ConvertedAmout = Number(amount);
-
-  if (currency === "USD") {
-    ConvertedAmout = Number(amount) * UsdRate;
-  }
-
-  ConvertedAmout = Math.round(ConvertedAmout * 100) / 100;
-  const obj = {
-    Title: description,
-    currencyType: currency,
-    type: incometype,
-    TransactionAmount: ConvertedAmout,
-    category: category,
-    
-    userId: user.uid,
-  };
-
-  const docRef = await addDoc(collection(db, "transactions"), obj);
-
-  const newObj = {
-    ...obj,
-    id: docRef.id, 
-  };
-
-  setTransactions((prev) => [...prev, newObj]); 
-
-  setIncomeType("");
-  setCurrency("");
-  setAmount("");
-  setDescription("");
-  setCategory("");
-}
 
   const totalIncome = transactions.reduce(
     (acc, obj) => (obj.type === "income" ? acc + obj.TransactionAmount : acc),
-    0,
+    0
   );
   const totalExpense = transactions.reduce(
     (acc, obj) => (obj.type === "expense" ? acc + obj.TransactionAmount : acc),
-    0,
+    0
   );
   const totalBalance = totalIncome - totalExpense;
 
- const filterTransaction =
-  Filter === "All"
-    ? transactions
-    : transactions.filter(
-        (obj) => obj.currencyType && obj.currencyType === Filter
-      );
-      console.log(transactions);
-      
-      
+  const filterTransaction =
+    Filter === "All"
+      ? transactions
+      : transactions.filter((obj) => obj.currencyType && obj.currencyType === Filter);
 
   async function DeleteTrans(id) {
-  try {
-    // if (typeof id !== "string") {
-    //   alert("Old invalid transaction ❌ delete from Firebase manually");
-    //   return;
-    // }
-
-    await deleteDoc(doc(db, "transactions", id));
-
-    setTransactions((prev) =>
-      prev.filter((item) => item.id !== id)
-    );
-  } catch (error) {
-    console.error("Delete error:", error);
+    try {
+      await deleteDoc(doc(db, "transactions", id));
+      setTransactions((prev) => prev.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error("Delete error:", error);
+      alert("Failed to delete transaction. Please try again.");
+    }
   }
-}
 
   return (
     <div className="Container">
-      <h1>Budget Tracker</h1>
-      <p>Track your income and expenses in multiple currencies</p>
+      <div className="page-hero">
+        <h1>Budget Tracker</h1>
+        <p>Track your income and expenses in multiple currencies</p>
+      </div>
 
       <Header
         totalBalance={totalBalance}

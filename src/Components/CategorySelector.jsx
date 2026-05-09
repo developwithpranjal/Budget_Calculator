@@ -1,13 +1,7 @@
 import React from "react";
 import {
-  FaUtensils,
-  FaShoppingCart,
-  FaCar,
-  FaHome,
-  FaFilm,
-  FaHeartbeat,
-  FaGift,
-  FaMoneyBill,
+  FaUtensils, FaShoppingCart, FaCar, FaHome,
+  FaFilm, FaHeartbeat, FaGift, FaMoneyBill,
 } from "react-icons/fa";
 
 export const categories = [
@@ -32,7 +26,10 @@ const CategorySelector = ({ category, setCategory }) => {
             className={`category-item ${category === cat.name ? "active" : ""}`}
             onClick={() => setCategory(cat.name)}
           >
-            <p>{cat.icon} {cat.name}</p>
+            <p>
+              <span style={{ fontSize: "16px" }}>{cat.icon}</span>
+              {cat.name}
+            </p>
           </div>
         ))}
       </div>

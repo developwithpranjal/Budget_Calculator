@@ -1,79 +1,163 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap");
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #1f2937;
-  padding: 14px 30px;
+  background: rgba(8, 12, 20, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 0 32px;
+  height: 60px;
   position: sticky;
   top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  z-index: 200;
+  border-bottom: 1px solid #1e2d45;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
 }
 
-.navbar-brand {
-  font-size: 25px;
-  font-weight: bold;
-  background-color: #4f46e5;
+/* Brand */
+.navbar-brand a {
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #93bbfd 0%, #6366f1 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-.navbar-brand a{
-    text-decoration: none;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.3px;
+  transition: opacity 0.2s;
 }
 
+.navbar-brand a:hover {
+  opacity: 0.8;
+}
+
+/* Nav brand icon fix */
+.navbar-brand a svg {
+  -webkit-text-fill-color: initial;
+  color: #6366f1;
+  flex-shrink: 0;
+}
+
+/* Links group */
 .navbar-links {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 6px;
 }
 
 .nav-link {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #9ca3af;
+  color: #7a92b8;
   text-decoration: none;
-  font-size: 15px;
-  padding: 8px 14px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 7px 14px;
   border-radius: 8px;
-  transition: 0.2s;
+  border: 1px solid transparent;
+  transition: all 0.18s;
 }
 
-.nav-link:hover,
+.nav-link:hover {
+  color: #e8f0fe;
+  background: rgba(59, 130, 246, 0.08);
+  border-color: #1e2d45;
+}
+
 .nav-link.active {
-  background: #3a78bf9e;
-  border: 1px solid rgb(7, 7, 236);
-  color: white;
+  color: #93bbfd;
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.3);
 }
 
+/* Nav buttons */
 .nav-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 15px;
-  padding: 8px 16px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 7px 16px;
   border-radius: 8px;
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
   text-decoration: none;
-  transition: 0.2s;
+  transition: all 0.18s;
 }
 
 .nav-btn.logout {
-  background: #7f1d1d;
-  color: #fca5a5;
+  background: rgba(244, 63, 94, 0.08);
+  color: #f87171;
+  border-color: rgba(244, 63, 94, 0.2);
 }
 
 .nav-btn.logout:hover {
-  background: #991b1b;
+  background: rgba(244, 63, 94, 0.18);
+  border-color: rgba(244, 63, 94, 0.4);
+  color: #fca5a5;
 }
 
 .nav-btn.login {
-  background: #6366f1;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
   color: white;
+  border-color: transparent;
+  box-shadow: 0 2px 12px rgba(99, 102, 241, 0.3);
 }
 
 .nav-btn.login:hover {
-  background: #4f46e5;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Dashboard link */
+.nav-link-dashboard {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #7a92b8;
+  text-decoration: none;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.18s;
+}
+
+.nav-link-dashboard:hover {
+  color: #e8f0fe;
+  background: rgba(59, 130, 246, 0.08);
+}
+
+.nav-link-dashboard.active {
+  color: #93bbfd;
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0 16px;
+  }
+
+  .nav-link span,
+  .nav-btn span {
+    display: none;
+  }
+
+  .nav-link,
+  .nav-btn {
+    padding: 8px 10px;
+  }
 }

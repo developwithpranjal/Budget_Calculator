@@ -75,7 +75,6 @@ const Profile = ({ user }) => {
       <p>Manage your personal information</p>
 
       <div className="profile-card">
-        {/* Avatar */}
         <div className="profile-avatar-section">
           <div className="profile-avatar">
             {user.photoURL ? (
@@ -90,7 +89,6 @@ const Profile = ({ user }) => {
           </div>
         </div>
 
-        {/* Info Grid */}
         <div className="profile-info-grid">
           <div className="profile-field">
             <MdBadge className="field-icon" />
@@ -154,12 +152,10 @@ const Profile = ({ user }) => {
           </div>
         </div>
 
-        {/* Joined */}
         {profile.joinedAt && (
           <p className="profile-joined">Member since: {profile.joinedAt}</p>
         )}
 
-        {/* Action Buttons */}
         <div className="profile-actions">
           {editing ? (
             <>

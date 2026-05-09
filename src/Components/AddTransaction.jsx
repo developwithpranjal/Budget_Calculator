@@ -1,6 +1,8 @@
 import React from "react";
-import { MdCurrencyRupee } from "react-icons/md";
+import { MdCurrencyRupee, MdAttachMoney } from "react-icons/md";
+import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
 import CategorySelector from "./CategorySelector";
+
 const AddTransaction = ({
   incometype, setIncomeType,
   currency, setCurrency,
@@ -9,50 +11,108 @@ const AddTransaction = ({
   category, setCategory,
   AddIncome, user
 }) => {
+  const isFormComplete =
+    incometype !== "" &&
+    currency !== "" &&
+    amount !== "" &&
+    Number(amount) > 0 &&
+    description.trim() !== "" &&
+    category !== "";
+
   return (
     <div className="Add_transaction">
-      <h1>Add Transaction</h1>
-      <label>Type:</label>
-      <select
-        className="transaction_type"
-        onChange={(e) => setIncomeType(e.target.value)}
-        value={incometype}
-      >
-        <option value="">Select Transaction type</option>
-        <option value="income">Income</option>
-        <option value="expense">Expense</option>
-      </select>
+      <h2 className="section-title">Add Transaction</h2>
 
-      <label>Currency:</label>
-      <select value={currency} onChange={(e) => setCurrency(e.target.value)}>
-        {/* <option value="">Select Currency</option> */}
-        <option value="INR">INR- Indian Rupee</option>
-        <option value="USD">$USD- US Dollar</option>
-      </select>
+      <div className="field-group">
+        <label className="field-label">Transaction Type</label>
+        <div className="toggle-group">
+          <button
+            type="button"
+            className={`toggle-btn income-toggle ${incometype === "income" ? "toggle-active-income" : ""}`}
+            onClick={() => setIncomeType("income")}
+          >
+            <FaArrowTrendUp className="toggle-icon" />
+            Income
+          </button>
+          <button
+            type="button"
+            className={`toggle-btn expense-toggle ${incometype === "expense" ? "toggle-active-expense" : ""}`}
+            onClick={() => setIncomeType("expense")}
+          >
+            <FaArrowTrendDown className="toggle-icon" />
+            Expense
+          </button>
+        </div>
+      </div>
 
-      <label>Amount(<MdCurrencyRupee />):</label>
-      <input
-        type="number"
-        placeholder="0.00"
-        onChange={(e) => setAmount(e.target.value)}
-        value={amount}
-      />
+      <div className="field-group">
+        <label className="field-label">Currency</label>
+        <div className="toggle-group">
+          <button
+            type="button"
+            className={`toggle-btn ${currency === "INR" ? "toggle-active-currency" : ""}`}
+            onClick={() => setCurrency("INR")}
+          >
+            <MdCurrencyRupee className="toggle-icon" />
+            INR
+          </button>
+          <button
+            type="button"
+            className={`toggle-btn ${currency === "USD" ? "toggle-active-currency" : ""}`}
+            onClick={() => setCurrency("USD")}
+          >
+            <MdAttachMoney className="toggle-icon" />
+            USD
+          </button>
+        </div>
+      </div>
 
-      <label>Description</label>
-      <input
-        type="text"
-        placeholder="e.g. Groceries,food"
-        onChange={(e) => setDescription(e.target.value)}
-        value={description}
-      />
+      <div className="field-group">
+        <label className="field-label">Amount ({currency === "USD" ? "$" : "₹"})</label>
+        <input
+          type="number"
+          placeholder="0.00"
+          min="0"
+          step="0.01"
+          onChange={(e) => setAmount(e.target.value)}
+          value={amount}
+          className="field-input"
+        />
+      </div>
 
-      {incometype && amount && (
+      <div className="field-group">
+        <label className="field-label">Description</label>
+        <input
+          type="text"
+          placeholder="e.g. Groceries, Salary, Rent..."
+          onChange={(e) => setDescription(e.target.value)}
+          value={description}
+          className="field-input"
+        />
+      </div>
+
+      <div className="field-group">
         <CategorySelector category={category} setCategory={setCategory} />
-      )}
+      </div>
 
-      <button className="AddExpense" onClick={AddIncome} disabled={!user}>
-        {incometype === "income" ? "Add Income (INR)" : incometype === "expense" ? "Add Expense (INR)" : "Add Transaction (INR)"}
+      <button
+        className="AddExpense"
+        onClick={AddIncome}
+        disabled={!user || !isFormComplete}
+        title={!isFormComplete ? "Please fill all fields to continue" : ""}
+      >
+        {!user
+          ? "Login to Add Transaction"
+          : incometype === "income"
+          ? "+ Add Income"
+          : incometype === "expense"
+          ? "+ Add Expense"
+          : "+ Add Transaction"}
       </button>
+
+      {!isFormComplete && user && (
+        <p className="form-hint">Fill all fields above to enable this button</p>
+      )}
     </div>
   );
 };
