@@ -1,6 +1,7 @@
 import React from "react";
 import ExpensePieChart from "../Components/Charts/ExpensePieChart";
 import IncomeBarChart from "../Components/Charts/IncomeBarChart";
+import MonthlyTrends from "../Components/Charts/MonthlyTrends";
 
 const Analytics = ({ transactions }) => {
   const totalIncome = transactions.reduce(
@@ -19,8 +20,14 @@ const Analytics = ({ transactions }) => {
     <div className="Container">
       <h1>Analytics</h1>
       <p>See Your Expense and Income Breakdown</p>
+
       <ExpensePieChart transactions={transactions} />
       <IncomeBarChart data={barData} />
+
+      <MonthlyTrends
+        currentIncome={totalIncome}
+        currentExpenses={totalExpense}
+      />
     </div>
   );
 };

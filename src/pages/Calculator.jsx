@@ -5,7 +5,17 @@ import { auth } from "../firebase";
 import Header from "../Components/Header";
 import AddTransaction from "../Components/AddTransaction";
 import TransactionList from "../Components/TransactionList";
-import { collection, addDoc, getDocs, query, where, deleteDoc, doc } from "firebase/firestore";
+import AIAdvisor from "../Components/Charts/AIAdvisor";
+import MonthlyTrends from "../Components/Charts/MonthlyTrends";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import "./index.css";
 
@@ -19,9 +29,7 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    CurrConversion();
-  }, []);
+  useEffect(() => { CurrConversion(); }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
@@ -33,24 +41,16 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
 
   useEffect(() => {
     if (!user) return;
-
     const fetchData = async () => {
       try {
-        const q = query(
-          collection(db, "transactions"),
-          where("userId", "==", user.uid)
-        );
+        const q = query(collection(db, "transactions"), where("userId", "==", user.uid));
         const snapshot = await getDocs(q);
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
         setTransactions(data);
       } catch (err) {
         console.error("Failed to fetch transactions:", err);
       }
     };
-
     fetchData();
   }, [user]);
 
@@ -74,17 +74,10 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
   }
 
   async function AddIncome() {
-    if (!user) {
-      alert("Please login first 🔐");
-      return;
-    }
+    if (!user) { alert("Please login first 🔐"); return; }
 
     let convertedAmount = Number(amount);
-
-    if (currency === "USD") {
-      convertedAmount = Number(amount) * UsdRate;
-    }
-
+    if (currency === "USD") convertedAmount = Number(amount) * UsdRate;
     convertedAmount = Math.round(convertedAmount * 100) / 100;
 
     const obj = {
@@ -99,10 +92,7 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
 
     try {
       const docRef = await addDoc(collection(db, "transactions"), obj);
-      const newObj = { ...obj, id: docRef.id };
-      setTransactions((prev) => [...prev, newObj]);
-
-      // Reset form — currency resets to INR (not empty string)
+      setTransactions((prev) => [...prev, { ...obj, id: docRef.id }]);
       setIncomeType("");
       setCurrency("INR");
       setAmount("");
@@ -115,12 +105,10 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
   }
 
   const totalIncome = transactions.reduce(
-    (acc, obj) => (obj.type === "income" ? acc + obj.TransactionAmount : acc),
-    0
+    (acc, obj) => (obj.type === "income" ? acc + obj.TransactionAmount : acc), 0
   );
   const totalExpense = transactions.reduce(
-    (acc, obj) => (obj.type === "expense" ? acc + obj.TransactionAmount : acc),
-    0
+    (acc, obj) => (obj.type === "expense" ? acc + obj.TransactionAmount : acc), 0
   );
   const totalBalance = totalIncome - totalExpense;
 
@@ -135,9 +123,16 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
       setTransactions((prev) => prev.filter((item) => item.id !== id));
     } catch (error) {
       console.error("Delete error:", error);
-      alert("Failed to delete transaction. Please try again.");
+      alert("Failed to delete. Please try again.");
     }
   }
+
+  const mappedTransactions = transactions.map((t) => ({
+    description: t.Title || "",
+    amount: t.TransactionAmount || 0,
+    category: t.category || "Other",
+    type: t.type,
+  }));
 
   return (
     <div className="Container">
@@ -155,26 +150,41 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
       />
 
       <div className="Transaction_box">
-        <AddTransaction
-          incometype={incometype}
-          setIncomeType={setIncomeType}
-          currency={currency}
-          setCurrency={setCurrency}
-          amount={amount}
-          setAmount={setAmount}
-          description={description}
-          setDescription={setDescription}
-          category={category}
-          setCategory={setCategory}
-          AddIncome={AddIncome}
-          user={user}
-        />
-        <TransactionList
-          filterTransaction={filterTransaction}
-          setFilter={setFilter}
-          DeleteTrans={DeleteTrans}
-          activeFilter={Filter}
-        />
+
+        <div className="left-panel">
+          <AddTransaction
+            incometype={incometype}
+            setIncomeType={setIncomeType}
+            currency={currency}
+            setCurrency={setCurrency}
+            amount={amount}
+            setAmount={setAmount}
+            description={description}
+            setDescription={setDescription}
+            category={category}
+            setCategory={setCategory}
+            AddIncome={AddIncome}
+            user={user}
+          />
+        </div>
+
+        <div className="right-panel">
+          <TransactionList
+            filterTransaction={filterTransaction}
+            setFilter={setFilter}
+            DeleteTrans={DeleteTrans}
+            activeFilter={Filter}
+          />
+
+          <div className="charts-row">
+           
+            <AIAdvisor
+              income={totalIncome}
+              expenses={mappedTransactions}
+            />
+          </div>
+        </div>
+
       </div>
     </div>
   );

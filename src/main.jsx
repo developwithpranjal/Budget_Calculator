@@ -8,9 +8,8 @@ import { auth } from "./firebase";
 
 const App = () => {
   const [transactions, setTransactions] = useState([]);
-  const [user, setUser] = useState(undefined); // ⚠️ very important
+  const [user, setUser] = useState(undefined); 
 
-  // 🔥 Firebase auth listener
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
       setUser(u ? u : null);
