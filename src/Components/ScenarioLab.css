@@ -1,0 +1,142 @@
+.scenario-lab {
+  height: 100%;
+}
+
+.tool-card-head {
+  margin-bottom: 14px;
+}
+
+.tool-card-title {
+  font-family: var(--font-display), "Syne", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+  letter-spacing: -0.02em;
+}
+
+.tool-card-desc {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.45;
+}
+
+.scenario-sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.scenario-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scenario-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.scenario-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.scenario-range {
+  flex: 1;
+  min-width: 0;
+  height: 6px;
+  border-radius: 3px;
+  accent-color: var(--accent-blue);
+  cursor: pointer;
+}
+
+.scenario-pct {
+  font-family: var(--font-body), "DM Sans", sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 3.25rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.scenario-reset {
+  margin-bottom: 14px;
+}
+
+.scenario-reset-btn {
+  font-family: var(--font-body), "DM Sans", sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.scenario-reset-btn:hover {
+  border-color: var(--accent-blue);
+  color: var(--text-primary);
+}
+
+.scenario-results {
+  margin: 0;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scenario-result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.scenario-result-row dt {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.scenario-result-row dd {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.scenario-result-row.highlight {
+  padding-top: 4px;
+  margin-top: 4px;
+  border-top: 1px dashed var(--border);
+}
+
+.scenario-result-row .pos {
+  color: var(--accent-income);
+}
+
+.scenario-result-row .neg {
+  color: var(--accent-expense);
+}
+
+.scenario-baseline {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  font-style: italic;
+}

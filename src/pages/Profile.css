@@ -278,3 +278,62 @@
     flex-direction: column;
   }
 }
+
+[data-theme="light"] .Profile-Container {
+  background: #f0f4fa;
+  background-image:
+    radial-gradient(ellipse 55% 40% at 20% 10%, rgba(37, 99, 235, 0.1) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 30% at 80% 80%, rgba(79, 70, 229, 0.08) 0%, transparent 60%);
+}
+
+[data-theme="light"] .Profile-Container h1 {
+  background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 50%, #4f46e5 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .Profile-Container > p {
+  color: #64748b;
+}
+
+[data-theme="light"] .profile-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 8px 40px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .profile-avatar-section {
+  border-bottom-color: #e2e8f0;
+}
+
+[data-theme="light"] .profile-name-block h2 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .profile-field {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .profile-field:hover {
+  border-color: #cbd5e1;
+}
+
+[data-theme="light"] .field-body label {
+  color: #64748b;
+}
+
+[data-theme="light"] .field-body span {
+  color: #0f172a;
+}
+
+[data-theme="light"] .profile-input {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #0f172a;
+}
+
+[data-theme="light"] .profile-joined {
+  color: #94a3b8;
+}

@@ -8,6 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   </head>
   <body>
+    <script>
+      try {
+        var __t = localStorage.getItem("expenso-theme");
+        document.documentElement.setAttribute(
+          "data-theme",
+          __t === "light" || __t === "dark" ? __t : "dark",
+        );
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

@@ -205,3 +205,60 @@ form {
   text-align: left;
   margin-top: -6px;
 }
+
+[data-theme="light"] .auth-container {
+  background: #f0f4fa;
+  background-image:
+    radial-gradient(ellipse 55% 45% at 15% 15%, rgba(37, 99, 235, 0.12) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 35% at 85% 75%, rgba(79, 70, 229, 0.1) 0%, transparent 60%);
+}
+
+[data-theme="light"] .auth-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 40px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(37, 99, 235, 0.04);
+}
+
+[data-theme="light"] .auth-box h1 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .auth-subtitle {
+  color: #64748b;
+}
+
+[data-theme="light"] .auth-field-label {
+  color: #64748b;
+}
+
+[data-theme="light"] .auth-box input {
+  border-color: #e2e8f0;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+[data-theme="light"] .auth-box input::placeholder {
+  color: #94a3b8;
+}
+
+[data-theme="light"] .auth-box input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+[data-theme="light"] .auth-divider::before,
+[data-theme="light"] .auth-divider::after {
+  background: #e2e8f0;
+}
+
+[data-theme="light"] .auth-divider span {
+  color: #94a3b8;
+}
+
+[data-theme="light"] .eye-icon {
+  color: #94a3b8;
+}
+
+[data-theme="light"] .eye-icon:hover {
+  color: #475569;
+}

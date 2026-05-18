@@ -6,7 +6,9 @@ import Header from "../Components/Header";
 import AddTransaction from "../Components/AddTransaction";
 import TransactionList from "../Components/TransactionList";
 import AIAdvisor from "../Components/Charts/AIAdvisor";
-import MonthlyTrends from "../Components/Charts/MonthlyTrends";
+import ScenarioLab from "../Components/ScenarioLab";
+import WeeklyStreak from "../Components/WeeklyStreak";
+import ExportToolbar from "../Components/ExportToolbar";
 import {
   collection,
   addDoc,
@@ -135,7 +137,7 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
   }));
 
   return (
-    <div className="Container">
+    <div className="Container dashboard-with-advisor">
       <div className="page-hero">
         <h1>Budget Tracker</h1>
         <p>Track your income and expenses in multiple currencies</p>
@@ -148,6 +150,21 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
         UsdRate={UsdRate}
         onRefreshRate={CurrConversion}
       />
+
+      <div className="dashboard-toolbar-row">
+        <div className="dashboard-tools">
+          <ScenarioLab baseIncome={totalIncome} baseExpense={totalExpense} />
+          <WeeklyStreak transactions={transactions} />
+        </div>
+        <div className="dashboard-export-slot">
+          <ExportToolbar
+            transactions={transactions}
+            totalIncome={totalIncome}
+            totalExpense={totalExpense}
+            totalBalance={totalBalance}
+          />
+        </div>
+      </div>
 
       <div className="Transaction_box">
 
@@ -175,17 +192,18 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
             DeleteTrans={DeleteTrans}
             activeFilter={Filter}
           />
-
-          <div className="charts-row">
-           
-            <AIAdvisor
-              income={totalIncome}
-              expenses={mappedTransactions}
-            />
-          </div>
         </div>
-
       </div>
+
+      <section
+        className="advisor-page-section"
+        aria-labelledby="advisor-main-heading"
+      >
+        <AIAdvisor
+          income={totalIncome}
+          expenses={mappedTransactions}
+        />
+      </section>
     </div>
   );
 };

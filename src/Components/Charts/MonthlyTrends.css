@@ -269,3 +269,130 @@
   .chart-wrap  { height: 220px; }
   .save-btn    { width: 100%; margin-left: 0; }
 }
+
+[data-theme="light"] .trends-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .trends-title {
+  color: #0f172a;
+}
+
+[data-theme="light"] .trends-sub {
+  color: #64748b;
+}
+
+[data-theme="light"] .trends-icon {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #059669;
+}
+
+[data-theme="light"] .table-wrap {
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .trends-table thead {
+  background: #f8fafc;
+}
+
+[data-theme="light"] .trends-table th {
+  color: #64748b;
+  border-bottom-color: #e2e8f0;
+}
+
+[data-theme="light"] .trends-table td {
+  color: #475569;
+  border-bottom-color: #f1f5f9;
+}
+
+[data-theme="light"] .trends-table tbody tr:hover td {
+  background: #f8fafc;
+}
+
+[data-theme="light"] .no-data {
+  color: #64748b;
+}
+
+[data-theme="light"] .stats-grid .stat-box {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .stat-label {
+  color: #64748b;
+}
+
+[data-theme="light"] .stat-value:not(.green):not(.red):not(.gold):not(.muted) {
+  color: #0f172a;
+}
+
+[data-theme="light"] .stat-value.muted {
+  color: #475569;
+}
+
+[data-theme="light"] .tab-row {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .tab-btn {
+  color: #64748b;
+}
+
+[data-theme="light"] .tab-btn:hover {
+  color: #0f172a;
+}
+
+[data-theme="light"] .tab-btn.active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .chart-wrap {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .chart-hint {
+  color: #475569;
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .save-btn {
+  border-color: #bbf7d0;
+  color: #047857;
+}
+
+[data-theme="light"] .save-btn:hover {
+  background: #ecfdf5;
+}
+
+[data-theme="light"] .save-btn.saved {
+  background: #ecfdf5;
+  border-color: #059669;
+}
+
+[data-theme="light"] .live-badge {
+  color: #047857;
+  background: #ecfdf5;
+  border-color: #bbf7d0;
+}
+
+[data-theme="light"] .current-row td {
+  background: rgba(5, 150, 105, 0.06);
+}
+
+[data-theme="light"] .del-btn {
+  border-color: #fecdd3;
+  color: #be123c;
+}
+
+[data-theme="light"] .del-btn:hover {
+  background: #fff1f2;
+  border-color: #f43f5e;
+  color: #e11d48;
+}

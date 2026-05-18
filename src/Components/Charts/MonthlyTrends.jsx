@@ -1,5 +1,29 @@
 import { useState, useEffect, useRef } from "react";
 import "./MonthlyTrends.css";
+import { useTheme } from "../../context/ThemeContext.jsx";
+
+function chartPalette(isLight) {
+  if (isLight) {
+    return {
+      legend: "#475569",
+      tick: "#334155",
+      grid: "#e2e8f0",
+      tooltipBg: "#ffffff",
+      tooltipBorder: "#e2e8f0",
+      tooltipTitle: "#0f172a",
+      tooltipBody: "#64748b",
+    };
+  }
+  return {
+    legend: "#c4d0b8",
+    tick: "#d1dbc4",
+    grid: "#2a3228",
+    tooltipBg: "#1a1f16",
+    tooltipBorder: "#2a3025",
+    tooltipTitle: "#e8ead4",
+    tooltipBody: "#a0a890",
+  };
+}
 
 const STORAGE_KEY = "budget_monthly_history";
 const MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -27,6 +51,9 @@ function saveHistory(data) {
 }
 
 export default function MonthlyTrends({ currentIncome = 0, currentExpenses = 0 }) {
+  const { theme } = useTheme();
+  const isLight = theme === "light";
+
   const [history, setHistory]         = useState(loadHistory);
   const [saved, setSaved]             = useState(false);
   const [activeTab, setActiveTab]     = useState("chart"); // "chart" | "table"
@@ -46,6 +73,7 @@ export default function MonthlyTrends({ currentIncome = 0, currentExpenses = 0 }
 
   // Sorted months
   const sortedKeys = Object.keys(displayHistory).sort();
+  const labelsKey = sortedKeys.join("|");
   const labels     = sortedKeys.map(getMonthLabel);
   const incomes    = sortedKeys.map((k) => displayHistory[k].income);
   const expArr     = sortedKeys.map((k) => displayHistory[k].expenses);
@@ -63,6 +91,8 @@ export default function MonthlyTrends({ currentIncome = 0, currentExpenses = 0 }
       if (chartRef.current) {
         chartRef.current.destroy();
       }
+
+      const pal = chartPalette(isLight);
 
       chartRef.current = new window.Chart(ctx, {
         type: "line",
@@ -117,7 +147,7 @@ export default function MonthlyTrends({ currentIncome = 0, currentExpenses = 0 }
               display: true,
               position: "top",
               labels: {
-                color: "#7a8068",
+                color: pal.legend,
                 font: { family: "'DM Sans', sans-serif", size: 12 },
                 usePointStyle: true,
                 pointStyleWidth: 10,
@@ -125,11 +155,11 @@ export default function MonthlyTrends({ currentIncome = 0, currentExpenses = 0 }
               },
             },
             tooltip: {
-              backgroundColor: "#1a1f16",
-              borderColor: "#2a3025",
+              backgroundColor: pal.tooltipBg,
+              borderColor: pal.tooltipBorder,
               borderWidth: 1,
-              titleColor: "#e8ead4",
-              bodyColor: "#a0a890",
+              titleColor: pal.tooltipTitle,
+              bodyColor: pal.tooltipBody,
               padding: 12,
               callbacks: {
                 label: (ctx) => `  ${ctx.dataset.label}: ₹${ctx.parsed.y.toFixed(2)}`,
@@ -138,13 +168,13 @@ export default function MonthlyTrends({ currentIncome = 0, currentExpenses = 0 }
           },
           scales: {
             x: {
-              grid: { color: "#1e2318", drawBorder: false },
-              ticks: { color: "#5a6250", font: { family: "'DM Sans', sans-serif", size: 11 } },
+              grid: { color: pal.grid, drawBorder: false },
+              ticks: { color: pal.tick, font: { family: "'DM Sans', sans-serif", size: 11 } },
             },
             y: {
-              grid: { color: "#1e2318", drawBorder: false },
+              grid: { color: pal.grid, drawBorder: false },
               ticks: {
-                color: "#5a6250",
+                color: pal.tick,
                 font: { family: "'DM Sans', sans-serif", size: 11 },
                 callback: (v) => `₹${v}`,
               },
@@ -164,7 +194,7 @@ export default function MonthlyTrends({ currentIncome = 0, currentExpenses = 0 }
     }
 
     return () => { if (chartRef.current) chartRef.current.destroy(); };
-  }, [activeTab, history, currentIncome, currentExpenses]);
+  }, [activeTab, history, currentIncome, currentExpenses, isLight, labelsKey]);
 
   // ── Save current month ────────────────────────────────
   const saveCurrentMonth = () => {

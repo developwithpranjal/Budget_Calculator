@@ -5,10 +5,11 @@ import "./pages/index.css";
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
+import { ThemeProvider } from "./context/ThemeContext.jsx";
 
 const App = () => {
   const [transactions, setTransactions] = useState([]);
-  const [user, setUser] = useState(undefined); 
+  const [user, setUser] = useState(undefined);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
@@ -19,12 +20,14 @@ const App = () => {
   }, []);
 
   return (
-    <Router
-      transactions={transactions}
-      setTransactions={setTransactions}
-      user={user}
-      setUser={setUser}
-    />
+    <ThemeProvider>
+      <Router
+        transactions={transactions}
+        setTransactions={setTransactions}
+        user={user}
+        setUser={setUser}
+      />
+    </ThemeProvider>
   );
 };
 
