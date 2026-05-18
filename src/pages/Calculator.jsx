@@ -151,23 +151,7 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
         onRefreshRate={CurrConversion}
       />
 
-      <div className="dashboard-toolbar-row">
-        <div className="dashboard-tools">
-          <ScenarioLab baseIncome={totalIncome} baseExpense={totalExpense} />
-          <WeeklyStreak transactions={transactions} />
-        </div>
-        <div className="dashboard-export-slot">
-          <ExportToolbar
-            transactions={transactions}
-            totalIncome={totalIncome}
-            totalExpense={totalExpense}
-            totalBalance={totalBalance}
-          />
-        </div>
-      </div>
-
       <div className="Transaction_box">
-
         <div className="left-panel">
           <AddTransaction
             incometype={incometype}
@@ -194,6 +178,25 @@ const Calculator = ({ transactions, setTransactions, user, setUser }) => {
           />
         </div>
       </div>
+
+      <section className="dashboard-insights-section" aria-label="Insights and exports">
+        <div className="dashboard-insights-grid">
+          <ScenarioLab baseIncome={totalIncome} baseExpense={totalExpense} />
+          <WeeklyStreak transactions={transactions} />
+          <div className="tool-card export-toolbar-card">
+            <div className="tool-card-head">
+              <h2 className="tool-card-title">Export reports</h2>
+              <p className="tool-card-desc">Download your data as CSV or a PDF summary</p>
+            </div>
+            <ExportToolbar
+              transactions={transactions}
+              totalIncome={totalIncome}
+              totalExpense={totalExpense}
+              totalBalance={totalBalance}
+            />
+          </div>
+        </div>
+      </section>
 
       <section
         className="advisor-page-section"
